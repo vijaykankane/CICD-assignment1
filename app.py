@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "Hello, Jenkins CI/CD!"
+    return "Hello, Jenkins CI/CD! Webhook configured"
 
 @app.route('/health')
 def health():
