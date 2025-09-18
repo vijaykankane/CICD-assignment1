@@ -33,14 +33,14 @@ pipeline {
             emailext (
                 subject: "Jenkins Build SUCCESS: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build completed successfully!\nBuild URL: ${env.BUILD_URL}",
-                to: "vijay.kankane@gmail.com"
+                to: "your-email@example.com"
             )
         }
         failure {
             emailext (
                 subject: "Jenkins Build FAILED: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
                 body: "Build failed!\nBuild URL: ${env.BUILD_URL}",
-                to: "vijay.kankane@gmail.com"
+                to: "your-email@example.com"
             )
         }
     }
