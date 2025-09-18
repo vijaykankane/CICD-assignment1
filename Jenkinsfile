@@ -4,15 +4,22 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Installing dependencies...'
-                sh 'pip3 install -r requirements.txt'
+                echo 'Creating virtual environment and installing dependencies...'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                '''
             }
         }
         
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'python3 -m pytest test_app.py -v'
+                sh '''
+                    . venv/bin/activate
+                    python -m pytest test_app.py -v
+                '''
             }
         }
         
@@ -20,8 +27,9 @@ pipeline {
             steps {
                 echo 'Deploying to staging...'
                 sh '''
-                    pkill -f "python3 app.py" || true
-                    nohup python3 app.py > app.log 2>&1 &
+                    . venv/bin/activate
+                    pkill -f "python app.py" || true
+                    nohup python app.py > app.log 2>&1 &
                     sleep 5
                     curl -f http://localhost:5000/health || exit 1
                 '''
